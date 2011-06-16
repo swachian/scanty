@@ -9,7 +9,7 @@ configure do
 
 	require 'ostruct'
 	Blog = OpenStruct.new(
-		:title => 'a scanty blog',
+		:title => 'Mix Them',
 		:author => 'richyzhang',
 		:url_base => 'http://localhost:4567/markblog/',
 		:admin_password => 'adam',
@@ -123,3 +123,9 @@ post '/past/:year/:month/:day/:slug/' do
 	redirect post.url
 end
 
+get '/past/:year/:month/:day/:slug/delete' do
+	auth
+	post = Post.filter(:slug => params[:slug]).first
+        post.destroy
+        redirect '/posts'
+end
