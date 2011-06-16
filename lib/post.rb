@@ -1,6 +1,8 @@
-require File.dirname(__FILE__) + '/../vendor/maruku/maruku'
+#require File.dirname(__FILE__) + '/../vendor/maruku/maruku'
 
-$LOAD_PATH.unshift File.dirname(__FILE__) + '/../vendor/syntax'
+require "maruku"
+
+#$LOAD_PATH.unshift File.dirname(__FILE__) + '/../vendor/syntax'
 require 'syntax/convertors/html'
 
 class Post < Sequel::Model
@@ -61,7 +63,7 @@ class Post < Sequel::Model
 		code_block = nil
 		markdown.split("\n").each do |line|
 			if !code_block and line.strip.downcase == '<code>'
-				out << Maruku.new(noncode.join("\n")).to_html
+				out << Maruku.new(noncode.join("\n")).to_html(:html_use_syntax=>true)
 				noncode = []
 				code_block = []
 			elsif code_block and line.strip.downcase == '</code>'
@@ -75,7 +77,7 @@ class Post < Sequel::Model
 				noncode << line
 			end
 		end
-		out << Maruku.new(noncode.join("\n")).to_html
+		out << Maruku.new(noncode.join("\n")).to_html(:html_use_syntax=>true)
 		out.join("\n")
 	end
 
