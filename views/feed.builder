@@ -15,6 +15,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
 			xml.author { xml.name Blog.author }
 			xml.summary post.summary_html, "type" => "html"
 			xml.content post.body_html, "type" => "html"
+            
 		end
 	end
 end

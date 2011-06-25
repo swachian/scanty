@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'sinatra'
-require 'json'
+require 'yajl'
+require 'yajl/json_gem'
 
 $LOAD_PATH.unshift File.dirname(__FILE__) + '/vendor/sequel'
 require 'sequel'
@@ -151,7 +152,7 @@ end
 get '/all' do
   posts = Post.reverse_order(:created_at)
   #content_type 'application/json', :charset => 'utf-8'
-  posts.collect {|a| a.to_json}.to_json
+  posts.collect {|post| post.to_json}.to_json
   
 end
 
