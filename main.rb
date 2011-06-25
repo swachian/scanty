@@ -139,6 +139,14 @@ get '/find_by_id/:id' do
 
 end
 
+get '/find_by_id/:id/delete' do 
+        auth
+        post = Post.filter(:id=>params[:id]).first
+        post.destroy
+        redirect '/posts'
+
+end
+
 
 get '/all' do
   posts = Post.reverse_order(:created_at)
