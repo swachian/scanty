@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sinatra'
+require 'json'
 
 $LOAD_PATH.unshift File.dirname(__FILE__) + '/vendor/sequel'
 require 'sequel'
@@ -129,3 +130,20 @@ get '/past/:year/:month/:day/:slug/delete' do
         post.destroy
         redirect '/posts'
 end
+
+get '/find_by_id/:id' do 
+        auth
+        post = Post.filter(:id=>params[:id]).first
+        stop [ 404, "Page not found" ] unless post
+        erb :edit, :locals => { :post => post, :url => 'posts' }
+
+end
+
+
+get '/all' do
+  posts = Post.reverse_order(:created_at)
+  #content_type 'application/json', :charset => 'utf-8'
+  posts.collect {|a| a.to_json}.to_json
+  
+end
+

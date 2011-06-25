@@ -1,7 +1,7 @@
 #require File.dirname(__FILE__) + '/../vendor/maruku/maruku'
 
 require "maruku"
-
+require "json"
 #$LOAD_PATH.unshift File.dirname(__FILE__) + '/../vendor/syntax'
 require 'syntax/convertors/html'
 
@@ -93,5 +93,16 @@ class Post < Sequel::Model
 			end
 		end
 		[ to_html(show.join("\n\n")), hide.size > 0 ]
+	end
+	
+	def to_json(*a)
+	  {
+	    'json_class' => 'post',
+	    'data' => [id,title,body,slug,tags,created_at]
+	  }.to_json(*a)
+	end
+	
+	def self.json_create(o)
+	  new(*o['data'])
 	end
 end
