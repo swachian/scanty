@@ -3,4 +3,4 @@ gem "sinatra", "0.9.4"
 gem "sqlite3"
 gem "maruku"
 gem "syntax"
-gem 'json'
+gem 'yajl-ruby', :require => 'yajl'
