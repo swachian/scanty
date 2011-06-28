@@ -1,5 +1,10 @@
 port = 3030
 
+desc "备份heroku文章"
+task :back do
+    `/usr/bin/wget http://zhangyublog.heroku.com/all -O all.json`
+end
+
 desc "Start the app server"
 task :start => :stop do
 	puts "Starting the blog"
